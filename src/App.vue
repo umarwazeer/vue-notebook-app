@@ -20,11 +20,12 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  text-align: left;
+  /* background: #F3F3F3; */
+  /* color: #F3F3F3; */
+  margin-top: 20px;
 }
 .body{
-  background-color: #c0c2c5;
+  /* background-color: #f3f3f3; */
 }
 </style>

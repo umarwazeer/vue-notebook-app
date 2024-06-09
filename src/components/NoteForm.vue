@@ -5,14 +5,15 @@
         <div class="col-sm-12">
             <div class="form">
               <div class="form-group">
-                <label>Note Title</label>
-                <input class="form-control" type="text" v-model="notes.title" required>
+                <label>Note Title*</label>
+                <input class="form-control" type="text" v-model="note.title" required>
               </div>
               <div class="form-group">
-                <label>Note Text</label>
-                <textarea rows="3" class="form-control" v-model="notes.text" required></textarea>
+                <label>Note Text*</label>
+                <textarea type="textarea" rows="3" class="form-control" v-model="note.text" required></textarea>
               </div>
-              <button class="btn btn-primary" @click="addNote">Save Note</button>
+              <!-- <button type="submit" @click="submit">{{ isEdit ? 'Update Note' : 'Add Note' }}</button> -->
+              <button class="btn btn-primary" @click="addNote">{{ isEdit ? 'Update Note' : 'Add Note' }}</button>
               <!-- <div class="alert alert-danger text-center" role="alert" v-bind:class="{ active: isActive }">All fields are Required</div> -->
             </div>
         </div>
@@ -24,22 +25,31 @@
 <script>
 export default {
   name: 'NoteForm',
+  props: {
+    noteData: {
+      type: Object,
+      default: () => ({ title: '', date: new Date().toISOString(), text: '' }), // Ensure a default note structure
+    },
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
    
   data(){
     return {
-           notes:{
-            text: "",
-            title: "",
-            date: Date.now(),
+      note: { ...this.noteData },
 
-           }
     }
   },
 
   methods:{
 
     addNote() {
-        this.$emit("addNote", this.notes)
+        // this.$emit("addNote", this.notes)
+        this.$emit('submit', this.note);
+
     }
 }
 }
@@ -64,13 +74,24 @@ body {
   border: 10px;
   padding: 20px; 
 }
+.container{
+  align-items: center;
+}
+label{
+  font-size: 17px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 50;
+
+  /* margin-bottom: 20px; */
+  /* margin-left: 20px; */
+}
 button.btn { 
-    padding-bottom: 40px;
+  padding-bottom: 40px;
 	display: block; 
 	padding: 15px 20px;
 	font-family: 'Ubuntu', sans-serif;
 	margin: 15px 0px;
-  width: 100%;
+  width: 608px;
 	box-shadow: 0px 1px 3px rgb(217, 217, 217);
 	border: none; 
 	border-radius: 2px; 
@@ -84,13 +105,6 @@ h2 {
   margin: 15px 0px; 
   color: #b5b5b5; 
 }
-h3 { 
-  text-align: center; 
-  font-size: 14px;
-  margin: 30px 0px 30px 0px; 
-  color: #b5b5b5; 
-}
-
 h4.card-title { 
     margin: 5px 0px 15px 0px; 
 }
@@ -121,20 +135,27 @@ p.card-text {
     font-size: 15px
 }
 .form{
-    width: 500px,
+    width: 500px;
+    padding-top: 0px;
 }
 .form-group{
-    padding-top: 30px;
+    padding-top: 20px;
 }
 .form-control{
-    width: 500px;
+    width: 600px;
+    outline-offset:30rem;
+    margin-top: 5px;
+
 }
 .form-control[type='text']{
     height: 30px;
     outline-offset:30rem;
 }
-.form-control{
+.form-control[type='textarea']{
+    height: 100px;
     outline-offset:30rem;
 }
-
+.form.label{
+  text-align: left;
+}
 </style>
